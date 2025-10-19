@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Poll Results - CivicFix</title>
+    <link rel="stylesheet" href="/static/AdminDashboard.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        body { background: #f4f6fa; font-family: Arial, sans-serif; }
+        h1 { margin-bottom: 15px; }
+        .results-container { 
+            padding: 30px; 
+            background: #fff; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+            margin-top: 30px;
+            transition: transform 0.2s ease;
+        }
+        .results-container:hover { transform: scale(1.01); }
+        h2 { margin-bottom: 25px; color: #2a4469; }
+
+        /* Option Rows */
+        .option-row { 
+            margin-bottom: 15px; 
+            padding: 15px; 
+            border-radius: 8px; 
+            background: #f9f9f9; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease, transform 0.2s ease;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .option-row:hover { 
+            background: #eef3fa; 
+            transform: translateX(5px);
+        }
+
+        .option-text { color: #333; }
+        .option-votes { 
+            color: #2a4469; 
+            font-weight: bold; 
+            font-size: 18px; 
+            transition: transform 0.3s ease;
+        }
+        .option-row:hover .option-votes {
+            transform: scale(1.1);
+        }
+
+        /* Back button */
+        .back-btn { 
+            display: inline-block; 
+            margin-top: 30px; 
+            background: #2a4469; 
+            color: white; 
+            padding: 12px 25px; 
+            text-decoration: none; 
+            border-radius: 6px; 
+            transition: background 0.3s ease;
+        }
+        .back-btn:hover { background: #1e2a38; }
+
+        /* Total votes */
+        .total-votes { 
+            font-size: 18px; 
+            margin-top: 20px; 
+            font-weight: bold; 
+            color: #444; 
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <p class="logo">Admin Dashboard</p>
+        <div class="profile">
+            <i class='bx bxs-user'></i><p>Admin</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="head"><p>Admin Menu</p></div>
+            <ul>
+               <li><a href="{{ url_for('admin_dashboard') }}"><i class='bx bxs-dashboard'></i> Dashboard</a></li>
+               <li><a href="{{ url_for('admin_users') }}"><i class='bx bxs-user'></i> Manage Users</a></li>
+               <li><a href="{{ url_for('admin_complaints') }}"><i class='bx bxs-message-square-error'></i> Manage Complaints</a></li>
+               <li><a href="{{ url_for('admin_status') }}"><i class='bx bxs-check-circle'></i> Manage Status Log</a></li>
+               <li><a href="{{ url_for('admin_escalations') }}"><i class='bx bxs-flag-alt'></i> Manage Escalation</a></li>
+               <li><a href="{{ url_for('admin_polls') }}" class="active"><i class='bx bxs-bar-chart-alt-2'></i> Manage Polls</a></li>
+            </ul>
+            <div class="foot">
+                <h3>Quick Actions</h3>
+                <a href="{{ url_for('admin_logout') }}"><button>Logout</button></a>
+            </div>
+        </div>
+
+        <div id="root">
+            <h1>Poll Results</h1>
+            <div class="results-container">
+                <h2>{{ poll['description'] }}</h2>
+                {% for option in options %}
+                <div class="option-row">
+                    <div class="option-text">{{ option['option_text'] }}</div>
+                    <div class="option-votes">{{ option['votes'] }}</div>
+                </div>
+                {% endfor %}
+                <p class="total-votes"><strong>Total Votes:</strong> <span id="vote-counter">{{ total_votes }}</span></p>
+                <a href="{{ url_for('admin_polls') }}" class="back-btn">Back to Polls</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animate the total vote counter
+        document.addEventListener("DOMContentLoaded", () => {
+            const counter = document.getElementById('vote-counter');
+            const target = parseInt(counter.innerText);
+            let count = 0;
+            const interval = setInterval(() => {
+                count += Math.ceil(target / 30);
+                if (count >= target) { count = target; clearInterval(interval); }
+                counter.innerText = count;
+            }, 30);
+        });
+    </script>
+</body>
+</html>

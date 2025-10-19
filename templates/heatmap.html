@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Complaint Heatmap - Solapur City</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    html, body { height: 100%; margin: 0; padding: 0; }
+    #map { height: 100vh; width: 100vw; }
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+
+  <script>
+    // Center on Solapur City (approx City Centre)
+    const solapurCityCenter = [17.6715, 75.9104];
+
+    // Initialize the map
+    const map = L.map('map', {
+      center: solapurCityCenter,
+      zoom: 13.5,
+      minZoom: 12,
+      maxZoom: 18
+    });
+
+    // Base tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Strict city boundary box
+    const cityBounds = L.latLngBounds(
+      [17.6350, 75.8700], // Southwest corner of Solapur city
+      [17.7100, 75.9500]  // Northeast corner of Solapur city
+    );
+
+    map.setMaxBounds(cityBounds);
+    map.on('drag', function() {
+      map.panInsideBounds(cityBounds, { animate: false });
+    });
+
+    // Fetch complaints & add heatmap
+    fetch('/api/complaints')
+      .then(response => response.json())
+      .then(data => {
+        const heatData = data.map(item => [item.lat, item.lng, 1]);
+        L.heatLayer(heatData, {
+          radius: 25,
+          blur: 15,
+          maxZoom: 17,
+        }).addTo(map);
+      });
+  </script>
+
+</body>
+</html>

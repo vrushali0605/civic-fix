@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CivicFix | My Escalations</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #cce7ff, #e0f7ff); padding: 40px; color: #1e2a38; }
+        h1 { text-align: center; color: #2a4469; margin-bottom: 30px; }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            background: white; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td { 
+            padding: 14px; 
+            border-bottom: 1px solid #ddd; 
+            text-align: left; 
+            font-size: 15px;
+        }
+        th { 
+            background-color: #2a4469; 
+            color: white; 
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+        tr:hover { background-color: #f1f5fb; transition: 0.2s; }
+        .level {
+    font-weight: bold;
+    padding: 10px 10px;
+    border-radius: 2px;
+    color: white;
+    display: inline-block;
+}
+    .level-1 { background: #4caf50; }   /* Green */
+    .level-2 { background: #ff9800; }   /* Orange */
+    .level-3 { background: #f44336; }   /* Red */
+    </style>
+</head>
+<body>
+    <h1>My Escalations</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Complaint</th>
+                <th>Level</th>
+                <th>Reason</th>
+                <th>Initiated On</th>
+                <th>Last Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for e in escalations %}
+            <tr>
+                <td>{{ e['subject'] }}</td>
+                <td class="level level-{{ e['current_level'] }}">Level {{ e['current_level'] }}</td>
+                <td>{{ e['reason'] }}</td>
+                <td>{{ e['created_at'] }}</td>
+                <td>{{ e['updated_at'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

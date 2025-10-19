@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Complaints - CivicFix</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background:linear-gradient(135deg, #cce7ff, #e0f7ff); padding: 40px; color: #1e2a38; }
+        h1 { text-align: center; color: #2a4469; margin-bottom: 30px; }
+        .complaints-container { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px 15px; border-bottom: 1px solid #ddd; text-align: left; }
+        th { background: #2a4469; color: #fff; font-size: 16px; }
+        tr:hover { background-color: #f1f5fb; transition: 0.3s ease; }
+        td { font-size: 15px; color: #333; }
+        .no-data { text-align: center; padding: 20px; font-size: 16px; color: #666; }
+    </style>
+</head>
+<body>
+    <h1>My Uploaded Complaints</h1>
+    <div class="complaints-container">
+        {% if complaints %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Description</th>
+                    <th>Uploaded At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for complaint in complaints %}
+                <tr>
+                    <td>{{ complaint['subject'] }}</td>
+                    <td>{{ complaint['description'] }}</td>
+                    <td>{{ complaint['created_at'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <div class="no-data">No complaints uploaded yet.</div>
+        {% endif %}
+    </div>
+</body>
+</html>

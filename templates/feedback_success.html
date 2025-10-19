@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback Submitted</title>
+    <link rel="stylesheet" href="/static/style.css"> <!-- optional -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #cce7ff, #e0f7ff);
+            text-align: center;
+        }
+        .message-box {
+            background: #d4edda;
+            padding: 40px;
+            border-radius: 10px;
+            border: 1px solid #c3e6cb;
+        }
+        .message-box h1 {
+            color: #155724;
+            margin-bottom: 20px;
+        }
+        .message-box a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background: #28a745;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .message-box a:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="message-box">
+        <h1>Thank you for your feedback!</h1>
+        <p>Your feedback has been successfully submitted.</p>
+        <a href="{{ url_for('user_home') }}">Go Back</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CivicFix - Policies & Schemes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+
+  background: linear-gradient(135deg, #cce7ff, #e0f7ff);
+      margin: 0;
+      padding: 0;
+      padding-bottom: 80px;
+      color: #fff;
+    }
+
+    header {
+      background-color: #002147;;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .section-title {
+      color: #002147;
+      margin: 2rem 0 1rem;  
+      text-align: center;
+      font-weight: bold;
+    }
+
+     .card {
+      margin: 1rem auto;
+      max-width: 900px;
+      background-color: #002147;
+      border-left: 5px solid #00142c;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border-radius:8px;
+    } 
+    
+
+    .card-body {
+      padding: 1rem 1.5rem;
+    }
+
+    .card img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 4px 0 0 4px;
+    }
+    .card-text{
+      font-weight :700px;;
+      background-color: #002e6a44;
+      padding:10px;
+      border-radius:4px;
+      color:#cfe1f6;
+    }
+
+    .awareness {
+      background-color:#001b3e;
+      border-left: 5px solid #ffffff57;
+      padding: 1rem;
+      margin: 2rem auto;
+      max-width: 900px;
+      font-style: italic;
+      color: #fff;
+    }
+
+     /* Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to right, #0a2a4a, #163356);
+  color: #fff;
+  padding: 12px 0;
+  z-index: 1000;
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.3);
+}
+
+footer ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+footer li {
+  text-align: center;
+  font-size: 13px;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+footer li:hover {
+  transform: translateY(-5px);
+}
+
+footer img {
+  width: 22px;
+  display: block;
+  margin: 0 auto 4px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+footer a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #00d4ff;
+}
+
+/* Icon hover: scale + glow (no tilt) */
+footer li:hover img {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 6px #00d4ff);
+}
+
+/* Underline slide animation */
+footer li::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  width: 50%;
+  height: 2px;
+  background: #00d4ff;
+  transition: transform 0.3s ease;
+}
+
+footer li:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+  </style>
+</head>
+<body>
+  <div class="content-wrapper"></div>
+
+  <header>
+    <h1>CivicFix - Government Policies & Schemes</h1>
+  </header>
+
+  <h3 class="section-title">Major Government Schemes</h3>
+
+  <div class="card">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="/static/swachh.jpg" class="img-fluid" alt="Swachh Bharat">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">Swachh Bharat Abhiyan</h5>
+          <p class="card-text">A nationwide initiative to improve urban sanitation and eliminate open defecation by encouraging cleanliness and hygiene in public areas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="/static/amrut1.jpg" class="img-fluid" alt="AMRUT">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">AMRUT (Atal Mission)</h5>
+          <p class="card-text">Focuses on urban renewal and transformation through development of infrastructure like water supply, sewerage, urban transport, and green spaces.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="/static/smart-cities.jpg" class="img-fluid" alt="Smart Cities Mission">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">Smart Cities Mission</h5>
+          <p class="card-text">Aims to make cities citizen-friendly and sustainable by promoting smart solutions and better urban planning with e-governance integration.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="/static/jal-jeevan.jpg" class="img-fluid" alt="Jal Jeevan Mission">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">Jal Jeevan Mission</h5>
+          <p class="card-text">Seeks to provide safe and adequate drinking water through individual household tap connections to all rural and urban households.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="section-title">Awareness Corner</h3>
+  <div class="awareness">🚫 Throwing garbage in open spaces can attract ₹500 fine. Use bins responsibly!</div>
+  <div class="awareness">⚡ Streetlight complaints raised via CivicFix must be resolved within 48–72 hours.</div>
+  <div class="awareness">📊 You can now vote on which civic problems matter most in your area using the Polling Module.</div>
+
+  <footer>
+    <ul>
+      <li>
+        <a href="{{ url_for('user_home') }}" style="color: white; text-decoration: none;">
+          <img src="/static/home1.jpg" alt="Home"><span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{url_for('polls') }}" style="color: white; text-decoration: none;">
+          <img src="/static/poll-icon.png" alt="Polls"><span>Polls</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('heatmap_info') }}" style="color: white; text-decoration: none;">
+          <img src="/static/map-icon.png" alt="Heatmap"><span>Heatmap</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('policies') }}" style="color: white; text-decoration: none;">
+          <img src="/static/gov-icon.png" alt="Policies"><span>Policies</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{url_for('you')}}" style="color: white; text-decoration: none;">
+          <img src="/static/user-icon.png" alt="You"><span>You</span>
+        </a>
+      </li>
+    </ul>
+  </footer>
+</body>
+</html>

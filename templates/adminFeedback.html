@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CivicFix | Manage Feedback</title>
+    <link rel="stylesheet" href="/static/AdminDashboard.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="header">
+        <p class="logo">Admin Dashboard</p>
+        <div class="profile">
+            <i class='bx bxs-user'></i><p>Admin</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="head">
+                <p>Admin Menu</p>
+            </div>
+            <ul>
+               <li><a href="{{ url_for('admin_dashboard') }}"><i class='bx bxs-dashboard'></i> Dashboard</a></li>
+               <li><a href="{{ url_for('admin_users') }}"><i class='bx bxs-user'></i> Manage Users</a></li>
+               <li><a href="{{ url_for('admin_complaints') }}"><i class='bx bxs-message-square-error'></i> Manage Complaints</a></li>
+               <li><a href="{{ url_for('admin_status') }}"><i class='bx bxs-check-circle'></i> Manage Status</a></li>
+               <li><a href="{{ url_for('admin_feedback') }}" class="active"><i class='bx bxs-comment-detail'></i> Manage Feedback</a></li>
+               <li><a href="{{url_for('admin_escalations')}}"><i class='bx bxs-flag-alt'></i> Manage Escalation</a></li>
+               <li><a href="{{url_for('admin_polls')}}"><i class='bx bxs-bar-chart-alt-2'></i> Manage Polls</a></li>
+            </ul>
+            <div class="foot">
+                <h3>Quick Actions</h3>
+                <a href="{{ url_for('admin_logout') }}"><button>Logout</button></a>
+            </div>
+        </div>
+
+        <div id="root">
+            <h1>Manage Feedback</h1>
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Feedback ID</th>
+                        <th>User Name</th>
+                        <th>Email</th>
+                        <th>Category</th>
+                        <th>Message</th>
+                        <th>Submitted At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for f in feedbacks %}
+                    <tr>
+                        <td>{{ f['id'] }}</td>
+                        <td>{{ f['name'] }}</td>
+                        <td>{{ f['email'] }}</td>
+                        <td>{{ f['category'] }}</td>
+                        <td>{{ f['message'] }}</td>
+                        <td>{{ f['created_at'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

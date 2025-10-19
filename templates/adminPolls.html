@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CivicFix | Manage Polls</title>
+    <link rel="stylesheet" href="/static/AdminDashboard.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        /* ---- FORM ---- */
+        .poll-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        .poll-form h2 { color: #2a4469; margin-bottom: 15px; }
+        .poll-form textarea, 
+        .poll-form input, 
+        .poll-form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        .poll-form button { 
+            background: #2a4469; 
+            color: white; 
+            cursor: pointer; 
+            border: none; 
+            font-weight: bold;
+        }
+        .poll-form button:hover { background: #1e2a38; }
+
+        /* ---- OPTIONS ---- */
+        /* Override for option field */
+.option-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.option-field input { 
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+/* Small 'X' button */
+.option-field .remove-option {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    font-size: 18px;
+    font-weight: bold;
+    background: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.option-field .remove-option:hover { background: darkred; }
+
+/* Add Option button (separate) */
+.add-option-btn {
+    display: inline-block;
+    background: #2a4469;
+    color: #fff;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 8px;
+    font-size: 14px;
+    width: auto; /* don’t stretch */
+}
+.add-option-btn:hover { background: #1e2a38; }
+
+/* Fix global button so only form-submit is full width */
+.poll-form button[type="submit"] {
+    width: 100%;
+}
+        /* ---- TABLE ---- */
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            background: white; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+            margin-top: 20px;
+        }
+        th, td { 
+            padding: 12px; 
+            border-bottom: 1px solid #ddd; 
+            text-align: left; 
+            font-size: 15px;
+        }
+        th { 
+            background-color: #2a4469; 
+            color: white; 
+        }
+        tr:hover { background-color: #f1f5fb; }
+        .btn { 
+            background: #2a4469; 
+            color: white; 
+            padding: 6px 12px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            text-decoration: none;
+        }
+        .btn:hover { background: #1e2a38; }
+
+        /* HEADERS */
+        h1 { 
+            color: #2a4469;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <p class="logo">Admin Dashboard</p>
+        <div class="profile">
+            <i class='bx bxs-user'></i><p>Admin</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="head">
+                <p>Admin Menu</p>
+            </div>
+            <ul>
+                <li><a href="{{ url_for('admin_dashboard') }}"><i class='bx bxs-dashboard'></i> Dashboard</a></li>
+                <li><a href="{{ url_for('admin_users') }}"><i class='bx bxs-user'></i> Manage Users</a></li>
+                <li><a href="{{ url_for('admin_complaints') }}"><i class='bx bxs-message-square-error'></i> Manage Complaints</a></li>
+                <li><a href="{{ url_for('admin_status') }}"><i class='bx bxs-check-circle'></i> Manage Status Log</a></li>
+                <li><a href="{{ url_for('admin_escalations') }}"><i class='bx bxs-flag-alt'></i> Manage Escalation</a></li>
+                <li><a href="{{ url_for('admin_polls') }}" class="active"><i class='bx bxs-bar-chart-alt-2'></i> Manage Polls</a></li>
+            </ul>
+            <div class="foot">
+                <h3>Quick Actions</h3>
+                <a href="{{ url_for('admin_logout') }}"><button>Logout</button></a>
+            </div>
+        </div>
+
+        <div id="root">
+            <h1>Create New Poll</h1>
+            <form class="poll-form" method="POST" action="{{ url_for('admin_polls') }}">
+                <h2>Poll Details</h2>
+                <textarea name="description" placeholder="Enter poll description" required></textarea>
+                <input type="datetime-local" name="expires_at" required>
+
+                <div class="options-container" id="optionsContainer">
+                    <div class="option-field">
+                        <input type="text" name="options[]" placeholder="Option 1" required>
+                        <button type="button" class="remove-option" onclick="removeOption(this)">X</button>
+                    </div>
+                </div>
+                <button type="button" class="add-option-btn" onclick="addOption()">+ Add Option</button>
+                <div style="clear:both;"></div>
+                <button type="submit">Create Poll</button>
+            </form>
+
+            <h1>Existing Polls</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Description</th>
+                        <th>Expires At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for poll in polls %}
+                    <tr>
+                        <td>{{ poll['id'] }}</td>
+                        <td>{{ poll['description'] }}</td>
+                        <td>{{ poll['expires_at'] }}</td>
+                        <td>
+                            <a href="{{ url_for('admin_poll_results', poll_id=poll['id']) }}" class="btn">View Results</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function addOption() {
+            const container = document.getElementById('optionsContainer');
+            const div = document.createElement('div');
+            div.classList.add('option-field');
+            div.innerHTML = `<input type="text" name="options[]" placeholder="Option" required>
+                             <button type="button" class="remove-option" onclick="removeOption(this)">X</button>`;
+            container.appendChild(div);
+        }
+
+        function removeOption(button) {
+            const field = button.parentElement;
+            const container = document.getElementById('optionsContainer');
+            if (container.children.length > 2) { 
+                field.remove();
+            } else {
+                alert("At least 2 options are required.");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pastel Gradient Blue Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Reset & body */
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+  body {
+    background: linear-gradient(135deg, #cce7ff, #e0f7ff);
+    color: #333;
+  }
+
+  /* Container for first section */
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    gap: 3rem;
+  }
+
+  .hero-text {
+    flex: 1;
+    font-size: 2rem;
+    animation: fadeInLeft 1s ease forwards;
+  }
+
+  .hero-image {
+    flex: 1;
+    height: 200px;
+    background: #b3e0ff;
+    border-radius: 15px;
+    animation: fadeInRight 1s ease forwards;
+    align-self: flex-start;
+    margin-top: 70px;
+  }
+
+  /* Row of three blocks */
+  .features {
+    display: flex;
+    justify-content: space-around;
+    padding: 4rem 2rem;
+    gap: 2rem;
+  }
+
+  .feature {
+    flex: 1;
+    background: rgba(255,255,255,0.6);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+
+  .feature:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+
+  /* Scroll animations */
+  @keyframes fadeInLeft {
+    0% { opacity: 0; transform: translateX(-50px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes fadeInRight {
+    0% { opacity: 0; transform: translateX(50px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Responsive */
+  @media(max-width: 900px){
+    .hero { flex-direction: column; text-align: center; }
+    .hero-text, .hero-image { flex: unset; width: 100%; }
+    .features { flex-direction: column; gap: 2rem; }
+  }
+
+   /* Section headers */
+    .section-header {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      position: relative;
+      padding-bottom: 8px;
+    }
+
+    .hero-btn {
+    display: inline-block;
+    margin-top: 3rem;
+    padding: 0.8rem 2rem;
+    background: #000b1b;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-btn::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 0;
+    top: 0;
+    left: 0;
+    background: rgba(255,255,255,0.3);
+    transition: 0.3s;
+}
+
+.hero-btn:hover::after {
+    height: 100%;
+
+}
+
+.hero-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+  .tutorial-step {
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .tutorial-step img {
+      width: 50px;
+      margin-right: 15px;
+    }
+
+     /* Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to right, #0a2a4a, #163356);
+  color: #fff;
+  padding: 12px 0;
+  z-index: 1000;
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.3);
+}
+
+footer ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+footer li {
+  text-align: center;
+  font-size: 13px;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+footer li:hover {
+  transform: translateY(-5px);
+}
+
+footer img {
+  width: 22px;
+  display: block;
+  margin: 0 auto 4px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+footer a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #00d4ff;
+}
+
+/* Icon hover: scale + glow (no tilt) */
+footer li:hover img {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 6px #00d4ff);
+}
+
+/* Underline slide animation */
+footer li::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  width: 50%;
+  height: 2px;
+  background: #00d4ff;
+  transition: transform 0.3s ease;
+}
+
+footer li:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+</style>
+
+<!-- Scrollable Header -->
+<header style="
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 1rem 2rem; 
+  background: rgb(0, 10, 29); 
+  backdrop-filter: blur(5px);
+">
+    <!-- Logo with SVG icon -->
+    <div style="
+      display: flex; 
+      align-items: center; 
+      font-weight: bold; 
+      font-size: 1.5rem; 
+      gap: 0.5rem; 
+      color: #ffffff;
+    ">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0d6efd" viewBox="0 0 24 24">
+            <path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+        </svg>
+        <span>CivicFix</span>
+    </div>
+
+    <!-- About link -->
+    <a href="{{url_for('about_us')}}" style="
+      text-decoration: none; 
+      color: #ffffff; 
+      font-weight: bold; 
+      font-size: 1rem;
+    ">About</a>
+</header>
+</head>
+<body>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>Welcome to CivicFix</h1>
+    <p>Report and track local civic issues easily with our platform.</p>
+    <!-- Animated Button -->
+    <a href="{{ url_for('upload') }}" class="hero-btn">Upload Your Complaint</a>
+
+  </div>
+  <div class="hero-image">
+    <!-- Placeholder for your image -->
+     <img src="/static/community.jpg"> 
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+  <div class="feature">
+     <div class="section-header">✅ Why Use CivicFix?</div>
+      <ul>
+        <b><li>✔ Transparent complaint tracking</li></b>
+        <b><li>✔ Heatmaps showing resolution hotspots</li></b>
+        <b><li>✔ Poll-based voting on civic priorities</li></b>
+       <b> <li>✔ Boost public engagement & accountability</li></b>
+      </ul>
+
+       <!-- Small image inside feature -->
+    <img src="/static/thinking.jpg" alt="Feature 1" style="
+      width: 80%;   /* adjust size */
+      margin-top: 1rem; 
+      border-radius: 10px; 
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    ">
+
+    </div>
+
+   
+  </div>
+  <div class="feature">
+     <div class="tutorial-section">
+      <div class="section-header">📌 How to Upload a Complaint</div>
+      <div class="tutorial-step">
+        <img src="/static/category-icon.png" alt="Category">
+        <div>Select a category for your complaint like Garbage, Roads, Electricity, or Others.</div>
+      </div>
+      <div class="tutorial-step">
+        <img src="/static/description.png" alt="Upload">
+        <div>Mention subject of complaint and write description of complaint.</div>
+      </div>
+      <div class="tutorial-step">
+        <img src="/static/upload-icon.png" alt="Upload">
+        <div>Upload an image showing the problem clearly.</div>
+      </div>
+      <div class="tutorial-step">
+        <img src="/static/location-icon.png" alt="Location">
+        <div>Enter the address or select location.</div>
+      </div>
+      <div class="tutorial-step">
+        <img src="/static/submit-icon.png" alt="Submit">
+        <div>Click Submit and track the status in your dashboard anytime.</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="feature" style="text-align: center;">
+  <h3 style="font-size: 1.2rem; margin-bottom: 2rem; font-weight: bold;">📍Impact in Solapur</h3>
+  
+  <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+    <div style="
+      font-size: 1rem; 
+      font-weight: bold; 
+      color: #001b42; 
+      padding: 1rem 1.5rem; 
+      border-radius: 12px; 
+      background: rgba(13,110,253,0.1);
+      transition: transform 0.3s;
+    ">
+      🛠 Accelerating repair of roads, bridges, and public spaces for safer daily commuting
+    </div>
+    
+    <div style="
+      font-size: 1 rem; 
+      font-weight: bold; 
+      color: #001b42; 
+      padding: 1rem 1.5rem; 
+      border-radius: 12px; 
+      background: rgba(13,110,253,0.1);
+      transition: transform 0.3s;
+    ">
+      🌱 Promoting cleanliness and sustainable waste management across the city
+    </div>
+    
+    <div style="
+      font-size: 1 rem; 
+      font-weight: bold; 
+      color: #001b42; 
+      padding: 1rem 1.5rem; 
+      border-radius: 12px; 
+      background: rgba(13,110,253,0.1);
+      transition: transform 0.3s;
+    ">
+      💧 Ensuring reliable water supply and electricity to improve quality of life
+    </div>
+    
+    <div style="
+      font-size: 1 rem; 
+      font-weight: bold; 
+      color: #001b42; 
+      padding: 1rem 1.5rem; 
+      border-radius: 12px; 
+      background: rgba(13,110,253,0.1);
+      transition: transform 0.3s;
+    ">
+      🌟 Empowering citizens to take action and make Solapur a cleaner, safer, and smarter city
+    </div>
+  </div>
+</div>
+
+<!-- Hover effect -->
+<style>
+.feature div div:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+</style>
+</section>
+
+<footer>
+  <ul>
+    <li><a href="{{ url_for('user_home') }}" style="color: white; text-decoration: none;"><img src="/static/home1.jpg" alt="Home"><span>Home</span></a></li>
+    <li><a href="{{ url_for('polls') }}" style="color: white; text-decoration: none;"><img src="/static/poll-icon.png" alt="Polls"><span>Polls</span></a></li>
+    <li><a href="{{ url_for('heatmap_info') }}" style="color: white; text-decoration: none;"><img src="/static/map-icon.png" alt="Heatmap"><span>Heatmap</span></a></li>
+    <li><a href="{{ url_for('policies') }}" style="color: white; text-decoration: none;"><img src="/static/gov-icon.png" alt="Policies"><span>Policies</span></a></li>
+    <li><a href="{{url_for('you')}}" style="color: white; text-decoration: none;"><img src="/static/user-icon.png" alt="You"><span>You</span></a></li>
+  </ul>
+</footer>
+
+</body>
+</html>

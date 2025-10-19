@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CivicFix | Manage Status</title>
+    <link rel="stylesheet" href="/static/AdminDashboard.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="header">
+        <p class="logo">Admin Dashboard</p>
+        <div class="profile">
+            <i class='bx bxs-user'></i><p>Admin</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="head">
+                <p>Admin Menu</p>
+            </div>
+            <ul>
+               <li><a href="{{ url_for('admin_dashboard') }}"><i class='bx bxs-dashboard'></i> Dashboard</a></li>
+               <li><a href="{{ url_for('admin_users') }}"><i class='bx bxs-user'></i> Manage Users</a></li>
+               <li><a href="{{ url_for('admin_complaints') }}"><i class='bx bxs-message-square-error'></i> Manage Complaints</a></li>
+               <li><a href="{{ url_for('admin_status') }}" class="active"><i class='bx bxs-check-circle'></i> Manage Status</a></li>
+               <li><a href="{{url_for('admin_escalations')}}"><i class='bx bxs-flag-alt'></i> Manage Escalation</a></li>
+               <li><a href="{{url_for('admin_polls')}}"><i class='bx bxs-bar-chart-alt-2'></i> Manage Polls</a></li>
+            </ul>
+            <div class="foot">
+                <h3>Quick Actions</h3>
+                <a href="{{ url_for('admin_logout') }}"><button>Logout</button></a>
+            </div>
+        </div>
+
+        <div id="root">
+            <h1>Manage Complaint Status</h1>
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Complaint ID</th>
+                        <th>Subject</th>
+                        <th>User Name</th>
+                        <th>Current Status</th>
+                        <th>Update Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in complaints %}
+                    <tr>
+                        <td>{{ c['id'] }}</td>
+                        <td>{{ c['subject'] }}</td>
+                        <td>{{ c['user_name'] }}</td>
+                        <td>{{ c['status'] }}</td>
+                        <td>
+                            <form method="post" style="display:flex; gap:10px;">
+                                <input type="hidden" name="complaint_id" value="{{ c['id'] }}">
+                                <select name="status">
+                                    <option value="Submitted">Submitted</option>
+                                    <option value="Handled to Authority">Handled to Authority</option>
+                                    <option value="In Process">In Process</option>
+                                    <option value="Resolved">Resolved</option>
+                                    <option value="Unresolved">Unresolved</option>
+                                </select>
+                                <button type="submit" class="login-btn">Update</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

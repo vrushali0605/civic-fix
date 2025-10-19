@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CivicFix | You</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #cce7ff, #e0f7ff) ;
+            color: #1e2a38;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 80px; /* Collapsed width */
+            background: #001737;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            transition: width 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .sidebar.expanded {
+            width: 260px; /* Expanded width */
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+        }
+
+        /* Logo */
+        .logo-container {
+            text-align: center;
+            padding: 15px 0;
+            font-size: 22px;
+            font-weight: bold;
+            background: #1e2a38;
+        }
+        .logo-text {
+            display: none;
+        }
+        .sidebar.expanded .logo-text {
+            display: inline;
+        }
+
+        /* Menu */
+        .menu {
+            flex: 1;
+            padding-top: 20px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background 0.2s ease;
+        }
+        .sidebar a:hover {
+            background: #1e2a38;
+        }
+        .sidebar a i {
+            font-size: 22px;
+            margin-right: 0;
+            transition: margin 0.3s ease;
+        }
+        .sidebar.expanded a i {
+            margin-right: 12px;
+        }
+        .link-text {
+            display: none;
+            white-space: nowrap;
+        }
+        .sidebar.expanded .link-text {
+            display: inline;
+        }
+        /* .header{
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        } */
+
+        /* Logout */
+        .logout {
+            background: #c0392b;
+            text-align: center;
+            margin: 20px;
+            border-radius: 6px;
+        }
+        .logout:hover {
+            background: #a93226;
+        }
+
+        /* Toggle button */
+        .toggle-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #2a4469;
+            color: #fff;
+            padding: 10px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 1100;
+            transition: left 0.3s ease;
+        }
+        .sidebar.expanded ~ .toggle-btn {
+            left: 280px;
+        }
+
+        /* Content */
+        .content {
+            margin-left: 80px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+        .sidebar.expanded ~ .content {
+            margin-left: 260px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -260px;
+            }
+            .sidebar.expanded {
+                left: 0;
+                width: 260px;
+            }
+            .sidebar.expanded ~ .content {
+                margin-left: 0;
+            }
+            .sidebar.expanded ~ .toggle-btn {
+                left: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar" id="sidebar">
+    <div class="logo-container">
+        <span class="logo-icon">⚙</span>
+        <span class="logo-text">CivicFix</span>
+    </div>
+    <div class="menu">
+        <a href="{{url_for('view_profile')}}"><i class='bx bxs-user'></i><span class="link-text">View My Profile</span></a>
+        <a href="{{url_for('view_complaints')}}"><i class='bx bxs-file'></i><span class="link-text">View Uploaded Complaints</span></a>
+        <a href="{{url_for('view_status')}}"><i class='bx bxs-check-circle'></i><span class="link-text">View Status of Complaints</span></a>
+        <a href="{{url_for('view_escalations')}}"><i class='bx bxs-flag-alt'></i><span class="link-text">View Escalations</span></a>
+        <a href="{{url_for('feedback')}}"><i class='bx  bx-edit'  ></i> <span class="link-text">Add Feedback</span></a>
+
+    </div>
+    <a href="{{url_for('logout')}}" class="logout"><i class='bx bxs-exit'></i><span class="link-text">Logout</span></a>
+</div>
+
+<div class="toggle-btn" id="toggleBtn">&#9776;</div>
+
+
+<!-- <div class="content">
+    <h1>Welcome to Your Dashboard</h1>
+    <p>Here’s a quick overview of your activity in CivicFix.</p> -->
+
+    <div class="content">
+    <h1><div class="header">Hello, Priya! 👋</div></h1>
+    <div class="subheader">Welcome to your CivicFix Dashboard</div>
+
+    <!-- Stats Cards -->
+    <div class="cards">
+        <div class="card">
+            <h2>{{ total_complaints }}</h2>
+            <p>Total Complaints</p>
+        </div>
+        <div class="card">
+            <h2>{{ resolved }}</h2>
+            <p>Resolved Complaints</p>
+        </div>
+        <div class="card">
+            <h2>{{ pending }}</h2>
+            <p>Pending Complaints</p>
+        </div>
+        <div class="card">
+            <h2>{{ escalations }}</h2>
+            <p>Escalations</p>
+        </div>
+    </div>
+
+    <!-- Recent Complaints Table -->
+    <div class="recent">
+        <h3>Recent Complaints</h3>
+        <table>
+            <tr>
+                <th>Subject</th>
+                <th>Status</th>
+                <th>Created At</th>
+            </tr>
+            {% for c in recent_complaints %}
+            <tr>
+                <td>{{ c['subject'] }}</td>
+                <td>{{ c['status'] or 'No Status' }}</td>
+                <td>{{ c['created_at'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+
+<!-- New Dashboard Insights -->
+<div class="insights">
+
+    <!-- Complaints Per Week -->
+    <div class="chart-card">
+        <h3>Complaints Filed Per Week</h3>
+        <canvas id="weeklyChart"></canvas>
+    </div>
+
+    <!-- Category Wise Complaints -->
+    <div class="chart-card">
+        <h3>Category Wise Complaints</h3>
+        <canvas id="categoryChart"></canvas>
+    </div>
+
+    <!-- Resolution Time -->
+    <div class="chart-card">
+        <h3>Resolution Time (Avg Days)</h3>
+        <canvas id="resolutionChart"></canvas>
+    </div>
+
+    <!-- Poll Participation -->
+    <div class="chart-card">
+        <h3>Poll Participation</h3>
+        <canvas id="pollChart"></canvas>
+    </div>
+
+</div>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Weekly Complaints (Line Chart)
+    new Chart(document.getElementById('weeklyChart'), {
+        type: 'line',
+        data: {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+            datasets: [{
+                label: 'Complaints',
+                data: [2, 5, 3, 4],
+                borderColor: '#2a4469',
+                backgroundColor: 'rgba(42,68,105,0.2)',
+                fill: true,
+                tension: 0.3
+            }]
+        }
+    });
+
+    // Category Wise (Bar Chart)
+    new Chart(document.getElementById('categoryChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Roads', 'Electricity', 'Water', 'Garbage'],
+            datasets: [{
+                label: 'Complaints',
+                data: [3, 2, 4, 1],
+                backgroundColor: ['#003366', '#006699', '#3399cc', '#66cccc']
+            }]
+        }
+    });
+
+    // Resolution Time (Column Chart)
+    new Chart(document.getElementById('resolutionChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Roads', 'Electricity', 'Water'],
+            datasets: [{
+                label: 'Avg Days',
+                data: [5, 3, 7],
+                backgroundColor: '#ff9933'
+            }]
+        },
+        options: {
+            indexAxis: 'x'
+        }
+    });
+
+    // Poll Participation (Horizontal Bar)
+    new Chart(document.getElementById('pollChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Polls Participated', 'Total Polls'],
+            datasets: [{
+                label: 'Polls',
+                data: [3, 5],
+                backgroundColor: ['#2ecc71', '#95a5a6']
+            }]
+        },
+        options: {
+            indexAxis: 'y'
+        }
+    });
+</script>
+
+<style>
+    .insights {
+        margin-top: 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 20px;
+    }
+    .chart-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .chart-card h3 {
+        margin-bottom: 15px;
+        font-size: 18px;
+        color: #1e2a38;
+    }
+</style>
+
+<style>
+    .cards {
+        display: flex;
+        gap: 20px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+    }
+    .card {
+        flex: 1;
+        min-width: 180px;
+        background: #003366;
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+    .card h2 {
+        font-size: 2em;
+        margin: 0;
+    }
+    .recent {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .recent table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    .recent th, .recent td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    .recent th {
+        background: #f1f1f1;
+    }
+</style>
+
+<script>
+    
+    document.getElementById("toggleBtn").addEventListener("click", function () {
+        document.getElementById("sidebar").classList.toggle("expanded");
+    });
+</script>
+
+</body>
+</html>

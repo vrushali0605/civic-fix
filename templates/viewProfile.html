@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile - CivicFix</title>
+    <link rel="stylesheet" href="/static/UserDashboard.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #cce7ff, #e0f7ff);
+            padding: 40px;
+            color: #1e2a38;
+        }
+        .profile-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .profile-container h1 {
+            text-align: center;
+            color: #2a4469;
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+        .profile-info {
+            margin-bottom: 20px;
+        }
+        .profile-info p {
+            font-size: 18px;
+            padding: 12px;
+            background: #f7f9fc;
+            border-radius: 8px;
+            margin: 10px 0;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .profile-info p:hover {
+            transform: scale(1.02);
+            background: #e9f0fa;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h1>My Profile</h1>
+        <div class="profile-info">
+            <p><strong>Name:</strong> {{ user.name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Phone:</strong> {{ user.phone }}</p>
+        </div>
+    </div>
+</body>
+</html>

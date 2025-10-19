@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Complaints - CivicFix</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background-color: linear-gradient(135deg, #cce7ff, #e0f7ff) ; padding: 40px; color: #1e2a38; }
+    h1 { text-align: center; color: #2a4469; margin-bottom: 30px; }
+    table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    th, td { padding: 15px; border-bottom: 1px solid #ddd; text-align: left; }
+    th { background-color: #2a4469; color: white; }
+    tr:hover { background-color: #f1f5fb; }
+    .btn { background: #2a4469; color: white; padding: 8px 14px; border: none; border-radius: 5px; cursor: pointer; }
+    .btn:hover { background: #1e2a38; }
+    /* Modal */
+    .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
+    .modal-content { background: white; padding: 20px; border-radius: 8px; width: 400px; max-width: 90%; margin: 10% auto; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .close { float: right; font-size: 20px; font-weight: bold; cursor: pointer; color: #333; }
+    .close:hover { color: red; }
+    textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; resize: none; }
+    .submit-btn { background: #2a4469; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; }
+    .submit-btn:hover { background: #1e2a38; }
+  </style>
+</head>
+<body>
+  <h1>My Complaints</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Subject</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Escalation Level</th>
+        <th>Action</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in complaints %}
+      <tr>
+        <td>{{ c['category'] }}</td>
+        <td>{{ c['subject'] }}</td>
+        <td>{{ c['description'] }}</td>
+        <td>{{ c['status'] }}</td>
+        <td>Level {{ c['escalation_level'] or 1 }}</td>
+        <td>
+          {% if c['escalation_level'] < 3 %}
+            <button class="btn escalate-btn" data-id="{{ c['id'] }}">Request Escalation</button>
+          {% else %}
+            <button class="btn" disabled>Max Level</button>
+          {% endif %}
+        </td>
+        <td>{{ c['created_at'] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+<!--Modal-->
+<div id="escalationModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Request Escalation</h3>
+    <form method="POST" action="{{ url_for('escalate') }}">
+      <input type="hidden" name="complaint_id" id="modalComplaintId">
+      
+      <label>Reason for escalation:</label>
+      <select name="reason" required style="width:100%; padding:10px; margin-top:8px; border-radius:5px; border:1px solid #ddd;">
+        <option value="">--Select Reason--</option>
+        <option value="Not resolved within standard time">Not resolved within standard time</option>
+        <option value="High traffic area / safety risk">High traffic area / safety risk</option>
+        <option value="Reported multiple times by residents">Reported multiple times by residents</option>
+        <option value="Large pothole causing accidents or vehicle damage">Large pothole causing accidents or vehicle damage</option>
+        <option value="Negligence / ignored by local authorities">Negligence / ignored by local authorities</option>
+      </select>
+      
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+</div> 
+
+
+   <script>
+    const modal = document.getElementById("escalationModal");
+    const closeBtn = document.querySelector(".close");
+    const complaintIdInput = document.getElementById("modalComplaintId");
+
+    document.querySelectorAll(".escalate-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        complaintIdInput.value = button.dataset.id;
+        modal.style.display = "block";
+      });
+    });
+
+    closeBtn.onclick = () => modal.style.display = "none";
+    window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; }
+  </script> 
+
+<div style="position: fixed; bottom: 20px; left: 20px;">
+  <a href="{{ url_for('user_home') }}" style="text-decoration: none;">
+    <button style="
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background: #2a4469;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;">
+      &#8592; Return to Home
+    </button>
+  </a>
+</div>
+</body>
+</html>

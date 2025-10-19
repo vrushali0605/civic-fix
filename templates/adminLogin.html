@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CivicFix | Admin Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    /* Same styling as user login */
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #0a1f44, #1e2d3f);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #f4f6f8;
+      padding: 35px 45px;
+      border-radius: 12px;
+      width: 400px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .container h2 {
+      color: #0a1f44;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 15px;
+    }
+
+    .input-group input:focus {
+      border-color: #0a1f44;
+      outline: none;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background-color: #0a1f44;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }
+
+    .login-btn:hover {
+      background-color: #122e56;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 13px;
+      color: #555;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Admin Login</h2>
+    <!-- <form method ="POST" action-="/admin/login">
+      <div class="input-group">
+        <label for="adminId">Admin ID</label>
+        <input type="text" id="adminId" required>
+      </div>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required>
+      </div>
+      <button type="submit" class="login-btn">Login</button>
+    </form> -->
+    <form method="POST" action="/admin/login">
+  <div class="input-group">
+    <label for="adminId">Admin ID</label>
+    <input type="text" id="adminId" name="adminId" required>
+  </div>
+  <div class="input-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+  </div>
+  <button type="submit" class="login-btn">Login</button>
+  {% if error %}
+    <p style="color:red; text-align:center; margin-top:10px;">{{ error }}</p>
+  {% endif %}
+</form>
+    <div class="footer">
+      For official use only
+    </div>
+  </div>
+</body>
+</html>

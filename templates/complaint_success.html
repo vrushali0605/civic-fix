@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Complaint Submitted</title>
+  <style>
+  
+body {
+  display: flex;
+  justify-content: center; /* centers horizontally */
+  align-items: flex-start; /* aligns to top */
+  padding-top: 80px;       /* adjust vertical spacing from top */
+  height: 100vh;
+  margin: 0;
+  text-align: center;
+  
+  background: linear-gradient(135deg, #cce7ff, #e0f7ff);
+} 
+
+    /* Popup animation */
+    .box {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      display: inline-block;
+      opacity: 0;
+      transform: scale(0.7);
+      animation: popup 0.6s forwards ease-out;
+    }
+
+    @keyframes popup {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    h1 {
+      color: #2a4469;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeSlide 0.5s forwards ease-out 0.3s;
+    }
+
+    p {
+      margin-bottom: 25px;
+      font-size: 16px;
+      opacity: 0;
+      transform: translateY(-10px);
+      animation: fadeSlide 0.5s forwards ease-out 0.5s;
+    }
+
+    a {
+      text-decoration: none;
+      padding: 12px 24px;
+      background: #2a4469;
+      color: white;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeSlide 0.5s forwards ease-out 0.7s;
+      display: inline-block;
+    }
+
+    a:hover {
+      background: #1e2a38;
+      transform: translateY(0) scale(1.05);
+    }
+
+    @keyframes fadeSlide {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Complaint Submitted Successfully!</h1>
+    <p>You can track the status of your complaint anytime.</p>
+    <a href="{{url_for('complaint_status')}}">Check Complaint Status</a>
+  </div>
+</body>
+</html>

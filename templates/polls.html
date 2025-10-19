@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CivicFix | Active Polls</title>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #cce7ff, #e0f7ff);
+        color: #1e2a38;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Heading */
+    h1 {
+        text-align: left;
+        font-size: 38px;
+        font-weight: 700;
+        margin: 40px 40px 25px;
+        color: #2a4469;
+        position: relative;
+        opacity: 0;
+        transform: translateY(-20px);
+        animation: headingFade 0.8s ease forwards;
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, #4a6fa5, #2a4469);
+        border-radius: 2px;
+        transform: scaleX(0);
+        transform-origin: left;
+        animation: underlineGrow 0.8s ease forwards 0.5s;
+    }
+
+    @keyframes headingFade { to { opacity: 1; transform: translateY(0); } }
+    @keyframes underlineGrow { to { transform: scaleX(1); } }
+
+    /* Layout */
+    .main-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 30px;
+        padding: 0 40px 60px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    /* LEFT: Polls */
+    .left-section {
+        flex: 1;
+        max-width: 55%;
+        overflow-y: auto;
+        max-height: 75vh;
+        padding-right: 10px;
+        scroll-behavior: smooth;
+    }
+    .left-section::-webkit-scrollbar { width: 8px; }
+    .left-section::-webkit-scrollbar-thumb { background: #b0c4de; border-radius: 10px; }
+
+    /* Poll container: slide from left + fade */
+    .poll-container {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        margin-bottom: 25px;
+        opacity: 0;
+        transform: translateX(-40px);
+        animation: pollSlideFade 0.6s ease forwards;
+    }
+    .poll-container:nth-child(odd) { animation-delay: 0.1s; }
+    .poll-container:nth-child(even) { animation-delay: 0.25s; }
+
+    @keyframes pollSlideFade { to { opacity: 1; transform: translateX(0); } }
+
+    .poll-question { font-size: 18px; font-weight: bold; margin-bottom: 20px; }
+    .option-btn {
+        display: block;
+        background: #e9f0fa;
+        padding: 12px;
+        margin: 8px 0;
+        border-radius: 6px;
+        cursor: pointer;
+        border: none;
+        width: 100%;
+        text-align: left;
+        font-size: 15px;
+        transition: background 0.2s, transform 0.2s;
+    }
+    .option-btn:hover { background: #d4e3f7; transform: translateX(3px); }
+
+    .option-result { margin-bottom: 18px; }
+    .option-label { font-size: 15px; font-weight: 500; margin-bottom: 5px; }
+    .bar { height: 26px; background: #dfe8f5; border-radius: 8px; overflow: hidden; position: relative; }
+    .bar-fill { height: 100%; background: linear-gradient(90deg, #4a6fa5, #2a4469); width: 0; transition: width 1s linear; }
+    .bar-percent { position: absolute; right: 10px; top: 0; height: 100%; display: flex; align-items: center; font-size: 15px; font-weight: 600; }
+    .votes-count { font-size: 13px; color: #555; margin-top: 10px; text-align: right; }
+
+    /* RIGHT: Wrapper for container + button */
+    .right-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* center button below container */
+        gap: 15px;
+    }
+
+    /* Right container */
+    .right-section {
+        flex: 1;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        animation: fadeIn 0.8s ease forwards;
+    }
+
+    .info-title { font-size: 24px; font-weight: 700; color: #2a4469; margin-bottom: 20px; text-align: center; }
+    .info-text { font-size: 15px; line-height: 1.6; text-align: center; margin-bottom: 20px; color: #001737; }
+    .info-img {
+        max-width: 100%;      /* fit inside container */
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        opacity: 0;
+        transform: scale(0.95);
+        animation: zoomIn 0.7s ease forwards 0.4s;
+    }
+
+    @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
+    @keyframes zoomIn { to {opacity:1; transform:scale(1);} }
+
+    /* Old Polls button below right container */
+    .old-polls a {
+        text-decoration: none;
+        background: #001e47;
+        color: white;
+        padding: 16px 35px;
+        font-size: 18px;
+        font-weight: 700;
+        transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+        display: inline-block;
+        animation: buttonPop 0.6s ease forwards 0.6s;
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    .old-polls a:hover {
+        background: #1e2a38;
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    }
+    @keyframes buttonPop { to { opacity:1; transform: scale(1); } }
+ /* Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to right, #0a2a4a, #163356);
+  color: #fff;
+  padding: 12px 0;
+  z-index: 1000;
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.3);
+}
+
+footer ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+footer li {
+  text-align: center;
+  font-size: 13px;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+footer li:hover {
+  transform: translateY(-5px);
+}
+
+footer img {
+  width: 22px;
+  display: block;
+  margin: 0 auto 4px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+footer a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #00d4ff;
+}
+
+/* Icon hover: scale + glow (no tilt) */
+footer li:hover img {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 6px #00d4ff);
+}
+
+/* Underline slide animation */
+footer li::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  width: 50%;
+  height: 2px;
+  background: #00d4ff;
+  transition: transform 0.3s ease;
+}
+
+footer li:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+</style>
+</head>
+<body>
+
+<h1>Active Polls</h1>
+
+<div class="main-wrapper">
+    <!-- LEFT: Active Polls -->
+    <div class="left-section">
+        {% for poll in polls %}
+        <div class="poll-container">
+            <div class="poll-question">{{ poll['description'] }}</div>
+
+            {% if poll['user_vote'] %}
+                {% for option in poll['options'] %}
+                    {% set fill = (option['votes'] / poll['total_votes'] * 100) if poll['total_votes'] > 0 else 0 %}
+                    <div class="option-result">
+                        <div class="option-label">{{ option['option_text'] }}</div>
+                        <div class="bar" style="--fill: {{ fill }}%;">
+                            <div class="bar-fill"></div>
+                            <div class="bar-percent">0%</div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="votes-count">Total votes: {{ poll['total_votes'] }}</div>
+            {% else %}
+                <form method="POST" action="{{ url_for('vote_poll') }}">
+                    <input type="hidden" name="poll_id" value="{{ poll['id'] }}">
+                    {% for option in poll['options'] %}
+                        <button type="submit" name="option_id" value="{{ option['id'] }}" class="option-btn">
+                            {{ option['option_text'] }}
+                        </button>
+                    {% endfor %}
+                </form>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- RIGHT: Info block + button -->
+    <div class="right-wrapper">
+        <div class="right-section">
+            <div class="info-title">Vote. Influence. Change.</div>
+            <div class="info-text">
+               <b> Participate in live civic polls and let your voice shape Solapur’s priorities.<br>
+                From road repairs to cleanliness drives — your vote decides what gets fixed first.</b>
+            </div>
+            <img src="/static/survey.jpeg" alt="Poll illustration" class="info-img">
+        </div>
+        <div class="old-polls">
+            <a href="{{ url_for('old_polls') }}">View Old Poll Results</a>
+        </div>
+    </div>
+</div>
+
+<script>
+window.addEventListener("load", () => {
+    document.querySelectorAll(".bar").forEach(bar => {
+        const fill = parseFloat(bar.style.getPropertyValue("--fill"));
+        const barFill = bar.querySelector(".bar-fill");
+        const percentText = bar.querySelector(".bar-percent");
+
+        let current = 0;
+        let stepTime = Math.max(10, 1000 / fill);
+        const interval = setInterval(() => {
+            current++;
+            if (current > fill) current = fill;
+            barFill.style.width = current + "%";
+            percentText.textContent = Math.round(current) + "%";
+            if (current >= fill) clearInterval(interval);
+        }, stepTime);
+    });
+});
+</script>
+<footer>
+  <ul>
+    <li>
+      <a href="{{ url_for('user_home') }}" style="color: white; text-decoration: none;">
+        <img src="/static/home1.jpg" alt="Home"><span>Home</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ url_for('polls') }}" style="color: white; text-decoration: none;">
+        <img src="/static/poll-icon.png" alt="Polls"><span>Polls</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ url_for('heatmap_info') }}" style="color: white; text-decoration: none;">
+        <img src="static/map-icon.png" alt="Heatmap"><span>Heatmap</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ url_for('policies') }}" style="color: white; text-decoration: none;">
+        <img src="/static/gov-icon.png" alt="Policies"><span>Policies</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ url_for('you')}} " style="color: white; text-decoration: none;">
+        <img src="/static/user-icon.png" alt="You"><span>You</span>
+      </a>
+    </li>
+  </ul>
+</footer>
+
+
+</body>
+</html>

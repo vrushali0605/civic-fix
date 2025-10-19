@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CivicFix | Manage Escalations</title>
+    <link rel="stylesheet" href="/static/AdminDashboard.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="header">
+        <p class="logo">Admin Dashboard</p>
+        <div class="profile">
+            <i class='bx bxs-user'></i><p>Admin</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="head">
+                <p>Admin Menu</p>
+            </div>
+            <ul>
+               <li><a href="{{ url_for('admin_dashboard') }}"><i class='bx bxs-dashboard'></i> Dashboard</a></li>
+               <li><a href="{{ url_for('admin_users') }}"><i class='bx bxs-user'></i> Manage Users</a></li>
+               <li><a href="{{ url_for('admin_complaints') }}"><i class='bx bxs-message-square-error'></i> Manage Complaints</a></li>
+               <li><a href="{{ url_for('admin_escalations') }}" class="active"><i class='bx bxs-flag-alt'></i> Manage Escalations</a></li>
+               <li><a href="{{url_for('admin_status')}}"><i class='bx bxs-check-circle'></i> Manage Status Log</a></li>
+               <li><a href="{{url_for('admin_polls')}}"><i class='bx bxs-bar-chart-alt-2'></i> Manage Polls</a></li>
+            </ul>
+            <div class="foot">
+                <h3>Quick Actions</h3>
+                <a href="{{ url_for('admin_logout') }}"><button>Logout</button></a>
+            </div>
+        </div>
+
+        <div id="root">
+            <h1>Manage Escalations</h1>
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Complaint ID</th>
+                        <th>Complaint Subject</th>
+                        <th>User Name</th>
+                        <th>Current Level</th>
+                        <th>Reason</th>
+                        <th>Created At</th>
+                        <th>Last Updated</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for e in escalations %}
+                    <tr>
+                        <td>{{ e['id'] }}</td>
+                        <td>{{ e['complaint_id'] }}</td>
+                        <td>{{ e['subject'] }}</td>
+                        <td>{{ e['user_name'] }}</td>
+                        <td>Level {{ e['current_level'] }}</td>
+                        <td>{{ e['reason'] }}</td>
+                        <td>{{ e['created_at'] }}</td>
+                        <td>{{ e['updated_at'] }}</td>
+                        <td>
+                            {% if e['current_level'] < 3 %}
+                            <form method="post" style="display:inline;">
+                                <input type="hidden" name="escalation_id" value="{{ e['id'] }}">
+                                <button type="submit" class="login-btn">Escalate</button>
+                            </form>
+                            {% else %}
+                                <button class="login-btn" disabled>Max Level</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

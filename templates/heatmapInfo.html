@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Heatmap Information</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <header class="heatmap-header">
+  <h1>Complaint Heatmap</h1>
+<header class="heatmap-top-header">
+  <div class="header-content">
+    <h1>Complaint Heatmap 🌐</h1>
+  </div>
+</header>
+
+<style>
+  .heatmap-top-header {
+    width: 100%;
+    background: linear-gradient(90deg, #001527, #1e88e5);
+    color: white;
+    padding: 15px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  }
+
+  .heatmap-top-header .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0 15px;
+  }
+
+  .heatmap-top-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  /* Push down the main container to avoid overlap */
+  .container-box {
+    margin-top: 90px;
+  }
+</style>
+  <style>
+    body {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container-box {
+      display: flex;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow: hidden;
+      max-width: 1100px;
+      width: 100%;
+    }
+    .left-block, .right-block {
+      flex: 1;
+      padding: 40px;
+    }
+    .left-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #f5f9ff;
+    }
+    .left-block h1 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+      color: #00294c;
+    }
+    .left-block p {
+      font-size: 1rem;
+      color: #444;
+      margin-bottom: 25px;
+    }
+    .heatmap-btn {
+      background: linear-gradient(90deg, #002747, #1e88e5);
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      width: fit-content;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .heatmap-btn:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 8px 15px rgba(30,136,229,0.4);
+    }
+    .right-block {
+      background: #e3f2fd;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .right-block img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .scale-box {
+      background: white;
+      border-radius: 10px;
+      padding: 15px 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: left;
+      max-width: 350px;
+    }
+    .scale-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .dot {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .dot.hot { background: red; }
+    .dot.medium { background: orange; }
+    .dot.low { background: yellow; }
+  </style>
+</head>
+<body>
+
+  <div class="container-box">
+    <!-- Left Block -->
+    <div class="left-block">
+      <h1>Complaint Heatmap 🌐</h1>
+      <p>
+        The heatmap visually highlights complaint density across different areas of Solapur. 
+        Hotter zones indicate a higher number of complaints submitted by citizens, helping authorities prioritize action more effectively.
+      </p>
+     <button class="heatmap-btn" onclick="window.location.href='/heatmap'">View Live Heatmap →</button>
+    </div>
+
+    <!-- Right Block -->
+    <div class="right-block">
+      <img src="/static/leaflet.jpg" alt="Static Map">
+      <div class="scale-box">
+        <h6><strong>Heatmap Scale</strong></h6>
+        <div class="scale-item"><div class="dot hot"></div> High Complaint Density</div>
+        <div class="scale-item"><div class="dot medium"></div> Medium Complaint Density</div>
+        <div class="scale-item"><div class="dot low"></div> Low Complaint Density</div>
+        <p style="font-size: 0.85rem; margin-top: 8px;">
+          Based on Leaflet Geolocation API points submitted via CivicFix.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
